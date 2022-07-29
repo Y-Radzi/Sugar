@@ -11,12 +11,17 @@ namespace Sugar
         /// </summary>
         /// <param name="filesFullName"></param>
         /// <returns></returns>
-        public static ComparaisonLogGroup FindFilesNonUnique(List<string> filesFullName)
+        public static ComparaisonLogOutput FindFilesNonUnique(List<string> filesFullName)
         {
             filesFullName = filesFullName.Distinct().ToList();
 
-            var logGroup = new ComparaisonLogGroup() { Name = "Files non unique" };
-            
+            string keyCompared = "keyCompared";
+            string keyMore2GB = "keyMore2GB";
+
+            var logs = new ComparaisonLogOutput();
+            logs.Groups.Add(keyCompared, new ComparaisonLogGroup() { Name = "Non unique files" });
+            logs.Groups.Add(keyMore2GB, new ComparaisonLogGroup() { Name = "Unable to compare files more than 2 GB" });
+
             var files = new List<FileAndInfo>();
             foreach (var fileFullName in filesFullName)
             {
@@ -24,8 +29,13 @@ namespace Sugar
                 {
                     var file = new FileAndInfo();
                     file.GetInfo(fileFullName);
-                    file.GetDataHashCode(fileFullName);
-                    files.Add(file);
+                    if (FileExtra.IsFileSizeLessThan2GB(fileFullName))
+                    {
+                        file.GetDataHashCode(fileFullName);
+                        files.Add(file);
+                    }
+                    else
+                        logs.Groups[keyMore2GB].Elements.Add(new ComparaisonLogElement(fileFullName));
                 }
             }
 
@@ -53,10 +63,10 @@ namespace Sugar
                 }
 
                 if (element.FullNamesCompared.Count > 0)
-                    logGroup.Elements.Add(element);
+                    logs.Groups[keyCompared].Elements.Add(element);
             }
 
-            return logGroup;
+            return logs;
         }
     }
 }

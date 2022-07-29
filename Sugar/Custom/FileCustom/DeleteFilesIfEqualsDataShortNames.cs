@@ -30,10 +30,12 @@ namespace Sugar
             string keyNotDeletedButSame = "NotDeletedButSame";
             string keyNotEqualsByHash = "NotEqualsByHash";
             string keyNotEqualsByData = "keyNotEqualsByData";
+            string keyMore2GB = "keyMore2GB";
 
             var logs = new ComparaisonLogOutput();
             logs.Groups.Add(keyDeleted, new ComparaisonLogGroup() { Name = "Files deleted" });
             logs.Groups.Add(keyNotDeletedButSame, new ComparaisonLogGroup() { Name = "Files equals, but not deleted" });
+            logs.Groups.Add(keyMore2GB, new ComparaisonLogGroup() { Name = "Unable to compare files more than 2 GB" });
             if (isShowNotEqualsLog)
             {
                 logs.Groups.Add(keyNotEqualsByHash, new ComparaisonLogGroup() { Name = "Files not equals by hash" });
@@ -45,50 +47,60 @@ namespace Sugar
             {
                 var file = new FileAndInfo();
                 file.GetInfo(fileFullNameToDelete);
-                file.GetDataHashCode(fileFullNameToDelete);
-                filesToDelete.Add(file);
+                if (file.IsFileSizeLessThan2GB())
+                {
+                    file.GetDataHashCode(fileFullNameToDelete);
+                    filesToDelete.Add(file);
+                }
+                else
+                    logs.Groups[keyMore2GB].Elements.Add(new ComparaisonLogElement(fileFullNameToDelete));
             }
 
             foreach (var fileFullNameToCompare in filesFullNameToCompare)
             {
-                var dataToCompare = File.ReadAllBytes(fileFullNameToCompare);
-                var dataHashCodeToCompare = Array<byte>.GetHashCodeOfArray(dataToCompare);
-                var fileShortNameWithExtentionToCompare = FileExtra.GetFileShortNameWithExtention(fileFullNameToCompare);
-
-                for (int j = 0; j < filesToDelete.Count; j++)
+                if (FileExtra.IsFileSizeLessThan2GB(fileFullNameToCompare))
                 {
-                    //if hash not equals
-                    if (filesToDelete[j].DataHashCode != dataHashCodeToCompare)
+                    var dataToCompare = File.ReadAllBytes(fileFullNameToCompare);
+                    var dataHashCodeToCompare = Array<byte>.GetHashCodeOfArray(dataToCompare);
+                    var fileShortNameWithExtentionToCompare = FileExtra.GetFileShortNameWithExtention(fileFullNameToCompare);
+
+                    for (int j = 0; j < filesToDelete.Count; j++)
                     {
-                        if (isShowNotEqualsLog)
-                            logs.Groups[keyNotEqualsByHash].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
-                        continue;
-                    }
-                    else
-                    {
-                        var dataToDelete = File.ReadAllBytes(filesToDelete[j].Info.FullName);
-                        //if data not equals
-                        if (!dataToDelete.SequenceEqual(dataToCompare))
+                        //if hash not equals
+                        if (filesToDelete[j].DataHashCode != dataHashCodeToCompare)
                         {
                             if (isShowNotEqualsLog)
-                                logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
+                                logs.Groups[keyNotEqualsByHash].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
                             continue;
                         }
-                    }
+                        else
+                        {
+                            var dataToDelete = File.ReadAllBytes(filesToDelete[j].Info.FullName);
+                            //if data not equals
+                            if (!dataToDelete.SequenceEqual(dataToCompare))
+                            {
+                                if (isShowNotEqualsLog)
+                                    logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
+                                continue;
+                            }
+                        }
 
-                    //if data equals
-                    //if short name equals
-                    if (FileExtra.GetFileShortNameWithExtention(filesToDelete[j].Info.FullName) == fileShortNameWithExtentionToCompare)
-                    {
-                        File.Delete(filesToDelete[j].Info.FullName);
-                        logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
-                        filesToDelete.RemoveAt(j);
-                        j--;
+                        //if data equals
+                        //if short name equals
+                        if (FileExtra.GetFileShortNameWithExtention(filesToDelete[j].Info.FullName) == fileShortNameWithExtentionToCompare)
+                        {
+                            File.Delete(filesToDelete[j].Info.FullName);
+                            logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
+                            filesToDelete.RemoveAt(j);
+                            j--;
+                        }
+                        //if short name not equals
+                        else
+                            logs.Groups[keyNotDeletedButSame].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
                     }
-                    //if short name not equals
-                    else
-                        logs.Groups[keyNotDeletedButSame].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
                 }
+                else
+                    logs.Groups[keyMore2GB].Elements.Add(new ComparaisonLogElement(fileFullNameToCompare));
             }
 
             return logs;

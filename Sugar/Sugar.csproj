@@ -75,6 +75,7 @@
     <Compile Include="Custom\FileCustom\ComparaisonLog\ComparaisonLogOutput.cs" />
     <Compile Include="Default\FileExtra\IsAnyFileHasExtention.cs" />
     <Compile Include="Default\FileExtra\GetFilesAll.cs" />
+    <Compile Include="Default\FileExtra\IsFileSizeLessThan2GB.cs" />
     <Compile Include="Default\FolderExtra\GetFoldersFullnameFromPlainText.cs" />
     <Compile Include="Default\ICollectionExtra\ICollectionExtra_Temp\Display.cs" />
     <Compile Include="Default\ICollectionExtra\ICollectionExtra_Temp\IsNullOrEmpty.cs" />

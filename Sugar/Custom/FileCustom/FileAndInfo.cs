@@ -41,6 +41,15 @@ namespace Sugar
                 this.DataHashCode = Array<byte>.GetHashCodeOfArray(data);
             }
 
+            /// <summary>
+            /// Is file size < 2147483648 bytes?
+            /// </summary>
+            /// <returns></returns>
+            public bool IsFileSizeLessThan2GB()
+            {
+                return (this.Info.Length < 2147483648);
+            }
+
         }
 
 
