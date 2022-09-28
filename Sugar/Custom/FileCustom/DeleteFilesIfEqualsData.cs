@@ -20,9 +20,6 @@ namespace Sugar
             filesFullNameToCompare = filesFullNameToCompare.Distinct().ToList();
             filesFullNameToDelete = filesFullNameToDelete.Distinct().ToList().GetUniqueOfThis(filesFullNameToCompare);
 
-            if (filesFullNameToCompare.IsIntersects(filesFullNameToDelete))
-                throw new Exception("Can't \"DeleteFilesIfEqualsData\", some filenames are interscects");
-
             if (!FileExtra.IsFiles(filesFullNameToCompare, true))
                 throw new Exception($"Can't \"DeleteFilesIfEqualsData\", some comparing filenames are not a files");
 

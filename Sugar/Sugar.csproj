@@ -131,7 +131,7 @@
     <Compile Include="Default\DataTableExtra\Row\AddRow.cs" />
     <Compile Include="Default\ListExtra\List_String\Display.cs" />
     <Compile Include="Default\ListExtra\List_String\IsEqualsAtSameCount.cs" />
-    <Compile Include="Custom\FileCustom\DeleteFilesIfEqualsDataShortNames.cs" />
+    <Compile Include="Custom\FileCustom\DeleteFilesIfEqualsData.cs" />
     <Compile Include="Default\FileExtra\GetFileFreeFullName.cs" />
     <Compile Include="Default\FileExtra\GetFileShortNameNoExtention.cs" />
     <Compile Include="Default\FileExtra\GetFileExtention.cs" />
