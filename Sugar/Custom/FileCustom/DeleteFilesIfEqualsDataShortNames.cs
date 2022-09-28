@@ -15,26 +15,27 @@ namespace Sugar
         /// <param name="isShowNotEqualsLog"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static ComparaisonLogOutput DeleteFilesIfEqualsDataShortNames(List<string> filesFullNameToDelete, List<string> filesFullNameToCompare, bool isShowNotEqualsLog)
+        public static ComparaisonLogOutput DeleteFilesIfEqualsData(List<string> filesFullNameToDelete, List<string> filesFullNameToCompare, bool isShowNotEqualsLog)
         {
             filesFullNameToCompare = filesFullNameToCompare.Distinct().ToList();
             filesFullNameToDelete = filesFullNameToDelete.Distinct().ToList().GetUniqueOfThis(filesFullNameToCompare);
 
+            if (filesFullNameToCompare.IsIntersects(filesFullNameToDelete))
+                throw new Exception("Can't \"DeleteFilesIfEqualsData\", some filenames are interscects");
+
             if (!FileExtra.IsFiles(filesFullNameToCompare, true))
-                throw new Exception($"Can't \"DeleteFilesIfEqualsDataShortNames\", some comparing filenames are not a files");
+                throw new Exception($"Can't \"DeleteFilesIfEqualsData\", some comparing filenames are not a files");
 
             if (!FileExtra.IsFiles(filesFullNameToDelete, true))
-                throw new Exception($"Can't \"DeleteFilesIfEqualsDataShortNames\", some deleting filenames are not a files");
+                throw new Exception($"Can't \"DeleteFilesIfEqualsData\", some deleting filenames are not a files");
 
             string keyDeleted = "Deleted";
-            string keyNotDeletedButSame = "NotDeletedButSame";
             string keyNotEqualsByHash = "NotEqualsByHash";
             string keyNotEqualsByData = "keyNotEqualsByData";
             string keyMore2GB = "keyMore2GB";
 
             var logs = new ComparaisonLogOutput();
             logs.Groups.Add(keyDeleted, new ComparaisonLogGroup() { Name = "Files deleted" });
-            logs.Groups.Add(keyNotDeletedButSame, new ComparaisonLogGroup() { Name = "Files equals, but not deleted" });
             logs.Groups.Add(keyMore2GB, new ComparaisonLogGroup() { Name = "Unable to compare files more than 2 GB" });
             if (isShowNotEqualsLog)
             {
@@ -62,8 +63,7 @@ namespace Sugar
                 {
                     var dataToCompare = File.ReadAllBytes(fileFullNameToCompare);
                     var dataHashCodeToCompare = Array<byte>.GetHashCodeOfArray(dataToCompare);
-                    var fileShortNameWithExtentionToCompare = FileExtra.GetFileShortNameWithExtention(fileFullNameToCompare);
-
+                    
                     for (int j = 0; j < filesToDelete.Count; j++)
                     {
                         //if hash not equals
@@ -87,16 +87,10 @@ namespace Sugar
 
                         //if data equals
                         //if short name equals
-                        if (FileExtra.GetFileShortNameWithExtention(filesToDelete[j].Info.FullName) == fileShortNameWithExtentionToCompare)
-                        {
-                            File.Delete(filesToDelete[j].Info.FullName);
-                            logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
-                            filesToDelete.RemoveAt(j);
-                            j--;
-                        }
-                        //if short name not equals
-                        else
-                            logs.Groups[keyNotDeletedButSame].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
+                        File.Delete(filesToDelete[j].Info.FullName);
+                        logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
+                        filesToDelete.RemoveAt(j);
+                        j--;
                     }
                 }
                 else

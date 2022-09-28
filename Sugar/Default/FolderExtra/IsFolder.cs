@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System;
 
 namespace Sugar
 {
@@ -10,7 +11,7 @@ namespace Sugar
         /// <param name="folderFullName"></param>
         /// <param name="isExceptionIfNotExists"></param>
         /// <returns>"true" if folder, "false" if not or not exists, or exception if isExeptionIfNotExists</returns>
-        /// <exception cref="System.Exception"></exception>
+        /// <exception cref="Exception"></exception>
         public static bool IsFolder(string folderFullName, bool isExceptionIfNotExists)
         {
             if (Directory.Exists(folderFullName.ErrorIfEmpty("IsFolder", "folderFullName")))
@@ -22,7 +23,7 @@ namespace Sugar
                     return false;
             }
             else if (isExceptionIfNotExists)
-                throw new System.Exception($"Can't check \"IsFolder\", element not exists: {folderFullName}");
+                throw new Exception($"Can't check \"IsFolder\", element not exists: {folderFullName}");
             else
                 return false;
 

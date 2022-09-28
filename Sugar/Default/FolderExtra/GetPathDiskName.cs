@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Sugar
+﻿namespace Sugar
 {
     public static partial class FolderExtra
     {

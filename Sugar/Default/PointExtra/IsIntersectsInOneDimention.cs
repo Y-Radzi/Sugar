@@ -3,7 +3,8 @@
     public static partial class PointExtra
     {
         /// <summary>
-        /// Is coordinates intersects in one dimention: X or Y
+        /// Is coordinates intersects in one dimention: X or Y.
+        /// Is square1 any point between square2 points
         /// </summary>
         /// <param name="square1LeftTop"></param>
         /// <param name="square1rightBottom"></param>

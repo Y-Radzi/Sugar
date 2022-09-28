@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using System.IO;
-
-namespace Sugar
+﻿namespace Sugar
 {
     public static partial class FileExtra
     {

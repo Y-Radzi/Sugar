@@ -1,4 +1,6 @@
-﻿namespace Sugar
+﻿using System;
+
+namespace Sugar
 {
     public static partial class Matrix
     {
@@ -23,7 +25,7 @@
             else if (matrix2.GetLength(0) == 1 && matrix2.GetLength(1) == 1)
                 return Multiply(matrix1, matrix2[0, 0]);
             else
-                throw new System.Exception(
+                throw new Exception(
                     "Error multiply; Matrix1: " + Array<double>.Display(matrix1)
                     + "; Matrix2: " + Array<double>.Display(matrix2));
         }

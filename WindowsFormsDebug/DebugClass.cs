@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sugar;
 
@@ -27,10 +26,7 @@ namespace WindowsFormsDebug
         {
             string result = "";
 
-            string str = "aaaaaaaaaa444444";
-            var div = str.Split(new string[] { "d" }, 2, StringSplitOptions.RemoveEmptyEntries);
-
-            result = div.ToList().Display();
+           ///
 
             return result;
         }

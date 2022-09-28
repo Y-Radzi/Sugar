@@ -1,18 +1,12 @@
 ﻿using System.Drawing;
-using System.Windows.Forms;
 
 namespace Sugar
 {
     public static partial class PointExtra
     {
-        public static Point GetPointRightTop(this Control control)
+        public static Point GetPointRightTop(this Point leftTop, Size size)
         {
-            return new Point(control.Location.X + control.Width, control.Location.Y);
-        }
-
-        public static Point GetPointRightTop(this Point objectLeftTop, Size objectSize)
-        {
-            return new Point(objectLeftTop.X + objectSize.Width, objectLeftTop.Y);
+            return new Point(leftTop.X + size.Width, leftTop.Y);
         }
 
     }

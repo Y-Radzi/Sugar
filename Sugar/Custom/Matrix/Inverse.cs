@@ -1,4 +1,6 @@
-﻿namespace Sugar
+﻿using System;
+
+namespace Sugar
 {
     public static partial class Matrix
     {
@@ -21,7 +23,7 @@
                 return Multiply(matrixTemp, 1 / Determinant(matrix));
             }
             else
-                throw new System.Exception($"Can't invert matrix, rows {matrix.GetLength(0)} != columns {matrix.GetLength(1)}; "
+                throw new Exception($"Can't invert matrix, rows {matrix.GetLength(0)} != columns {matrix.GetLength(1)}; "
                     + Array<double>.Display(matrix));
         }
     }

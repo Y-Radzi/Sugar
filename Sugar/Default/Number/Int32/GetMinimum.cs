@@ -19,7 +19,7 @@ namespace Sugar
         /// Minimum value of numbers
         /// </summary>
         /// <param name="numberMain"></param>
-        /// <param name="numberArray"></param>
+        /// <param name="numbers"></param>
         /// <returns></returns>
         public static int GetMinimum(this int numberMain, int[] numbers)
         {
@@ -34,7 +34,7 @@ namespace Sugar
         /// Minimum value of numbers
         /// </summary>
         /// <param name="numberMain"></param>
-        /// <param name="numberArray"></param>
+        /// <param name="numbers"></param>
         /// <returns></returns>
         public static int GetMinimum(this int numberMain, List<int> numbers)
         {

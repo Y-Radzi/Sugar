@@ -11,7 +11,8 @@ namespace Sugar
         /// <returns></returns>
         public static string Display(this Point point)
         {
-            return "Point (" + point.X.ToString() + StringExtra.SplitterColumnDefault + point.Y.ToString() + ")";
+            //return "Point (" + point.X.ToString() + StringExtra.SplitterColumnDefault + point.Y.ToString() + ")";
+            return $"X: {point.X}{StringExtra.SplitterColumnDefault}Y: {point.Y}";
         }
     }
 }

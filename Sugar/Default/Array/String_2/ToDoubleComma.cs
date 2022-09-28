@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sugar
+﻿namespace Sugar
 {
     public static partial class Array
     {

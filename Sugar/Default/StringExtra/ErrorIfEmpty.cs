@@ -1,4 +1,6 @@
-﻿namespace Sugar
+﻿using System;
+
+namespace Sugar
 {
     public static partial class StringExtra
     {
@@ -10,11 +12,11 @@
         /// <param name="variableName"></param>
         /// <param name="postfix"></param>
         /// <returns></returns>
-        /// <exception cref="System.Exception">Error in methodName: empty variableName + postfix</exception>
+        /// <exception cref="Exception">Error in methodName: empty variableName + postfix</exception>
         public static string ErrorIfEmpty(this string str, string methodName, string variableName, string postfix)
         {
             if (string.IsNullOrEmpty(str))
-                throw new System.Exception("Error in " + methodName + ": empty " + variableName + postfix);
+                throw new Exception("Error in " + methodName + ": empty " + variableName + postfix);
             else
                 return str;
         }
@@ -26,7 +28,7 @@
         /// <param name="methodName"></param>
         /// <param name="variableName"></param>
         /// <returns></returns>
-        /// /// <exception cref="System.Exception">Error in methodName: empty variableName</exception>
+        /// /// <exception cref="Exception">Error in methodName: empty variableName</exception>
         public static string ErrorIfEmpty(this string str, string methodName, string variableName)
         {
             return str.ErrorIfEmpty(methodName, variableName, "");
