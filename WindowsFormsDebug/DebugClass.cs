@@ -26,8 +26,6 @@ namespace WindowsFormsDebug
         {
             string result = "";
 
-           ///
-
             return result;
         }
     }

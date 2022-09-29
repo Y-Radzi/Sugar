@@ -17,7 +17,7 @@ namespace Sugar
             )
         {
             (sender as LinkLabel).Links[(sender as LinkLabel).Links.IndexOf(e.Link)].Visited = true;
-            Process.Start("explorer.exe", e.Link.LinkData as string);
+            Process.Start("explorer.exe", $"\"{e.Link.LinkData as string}\"");
         }
     }
 }
