@@ -94,6 +94,8 @@
     <Compile Include="Default\IDictionaryExtra\IDictionary_TempKey_TempValue\IsEquals.cs" />
     <Compile Include="Default\IDictionaryExtra\IDictionary_TempKey_TempValue\IsNullOrEmpty.cs" />
     <Compile Include="Default\IDictionaryExtra\IDictionary_TempKey_TempValue\SetValueIfKeyExists.cs" />
+    <Compile Include="Default\LinkLabelExtra\AddFileNameCopyContextMenu.cs" />
+    <Compile Include="Default\LinkLabelExtra\AddCopyContextMenu.cs" />
     <Compile Include="Default\LinkLabelExtra\LinkLabelClickedSimple.cs" />
     <Compile Include="Default\ListExtra\List_String\Copy.cs" />
     <Compile Include="Default\ListExtra\List_String\IsIntersects.cs" />
@@ -102,7 +104,10 @@
     <Compile Include="Default\Number\Int32\GetDistance.cs" />
     <Compile Include="Default\ObjectExtra\ToDoubleSlow.cs" />
     <Compile Include="Default\PointExtra\IsIntersects.cs" />
+    <Compile Include="Default\RichTextBoxExtra\AddDefaultShortContextMenu.cs" />
+    <Compile Include="Default\RichTextBoxExtra\AddDefaultFullContextMenu.cs" />
     <Compile Include="Default\SizeExtra\Display.cs" />
+    <Compile Include="Default\StringExtra\CopyToBuffer.cs" />
     <Compile Include="Default\StringExtra\To\ToDoubleComma.cs" />
     <Compile Include="Default\ListExtra\List_String\GetUniqueOfOther.cs" />
     <Compile Include="Default\ListExtra\List_String\GetUniqueOfThis.cs" />

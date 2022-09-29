@@ -20,7 +20,7 @@
             string fileExtention = GetFileExtention(fileFullName);
 
             if (!string.IsNullOrEmpty(fileExtention))
-                fileFullName = fileFullName.Substring(0, fileExtention.Length + 1);
+                fileFullName = fileFullName.Substring(0, fileFullName.Length - fileExtention.Length - 1);
 
             return (fileFullName.Contains(StringExtra.SplitterDisk)) ? "" : fileFullName;
         }

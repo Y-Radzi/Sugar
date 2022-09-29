@@ -12,7 +12,7 @@ namespace Sugar
             while (File.Exists(fileFullName))
             {
                 index++;
-                fileFullName = fileFullName.Substring(0, fileFullName.Length - fileExtention.Length) + $"({index})" + fileExtention;
+                fileFullName = fileFullName.Substring(0, fileFullName.Length - fileExtention.Length) + $" ({index})" + fileExtention;
             }
             return fileFullName;
         }
