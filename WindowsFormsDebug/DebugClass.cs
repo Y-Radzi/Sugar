@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Sugar;
+using System.Collections.Generic;
 
 namespace WindowsFormsDebug
 {
@@ -26,8 +28,8 @@ namespace WindowsFormsDebug
         {
             string result = "";
 
-
-
+            string f = @"";
+            result = FileCustom.DeleteEmptyFolders(f);
 
             return result;
         }

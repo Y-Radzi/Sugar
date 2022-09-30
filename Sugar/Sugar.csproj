@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Custom\FileCustom\ComparaisonLog\ComparaisonLogElement.cs" />
     <Compile Include="Custom\FileCustom\ComparaisonLog\ComparaisonLogGroup.cs" />
+    <Compile Include="Custom\FileCustom\DeleteEmptyFolders.cs" />
     <Compile Include="Custom\FileCustom\FindFilesNonUnique.cs" />
     <Compile Include="Custom\Matrix\Arithmetic\Add.cs" />
     <Compile Include="Custom\Matrix\Arithmetic\Multiply.cs" />
@@ -104,6 +105,8 @@
     <Compile Include="Default\Number\Int32\GetDistance.cs" />
     <Compile Include="Default\ObjectExtra\ToDoubleSlow.cs" />
     <Compile Include="Default\PointExtra\IsIntersects.cs" />
+    <Compile Include="Default\RichTextBoxExtra\DragDrop_Folder.cs" />
+    <Compile Include="Default\RichTextBoxExtra\DragEnter_File.cs" />
     <Compile Include="Default\RichTextBoxExtra\AddDefaultShortContextMenu.cs" />
     <Compile Include="Default\RichTextBoxExtra\AddDefaultFullContextMenu.cs" />
     <Compile Include="Default\SizeExtra\Display.cs" />

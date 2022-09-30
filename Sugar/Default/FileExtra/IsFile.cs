@@ -39,5 +39,16 @@ namespace Sugar
 
             return true;
         }
+
+        public static bool IsAnyFiles(List<string> filesFullName, bool isExceptionIfNotExists)
+        {
+            foreach (var fileFullName in filesFullName)
+            {
+                if (IsFile(fileFullName, isExceptionIfNotExists))
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

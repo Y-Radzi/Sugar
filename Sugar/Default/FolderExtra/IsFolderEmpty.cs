@@ -5,7 +5,7 @@ namespace Sugar
     public static partial class FolderExtra
     {
         /// <summary>
-        /// Is folder contains something
+        /// Is folder not contains something
         /// </summary>
         /// <param name="folderFullName"></param>
         /// <returns>false if contains or not exists, else: true</returns>
@@ -22,9 +22,9 @@ namespace Sugar
             var childFiles = Directory.GetFiles(folderFullName, "*.*", SearchOption.AllDirectories);
 
             if (Array<string>.IsNullOrEmpty(childFolders) && Array<string>.IsNullOrEmpty(childFiles))
-                return false;
-            else
                 return true;
+            else
+                return false;
         }
     }
 }
