@@ -12,10 +12,10 @@ namespace Sugar
         /// </summary>
         /// <param name="filesFullNameToDelete"></param>
         /// <param name="filesFullNameToCompare"></param>
-        /// <param name="isShowNotEqualsLog"></param>
+        /// <param name="isReallyDelete"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static ComparaisonLogOutput DeleteFilesIfEqualsData(List<string> filesFullNameToDelete, List<string> filesFullNameToCompare, bool isShowNotEqualsLog)
+        public static ComparaisonLogOutput DeleteFilesIfEqualsData(List<string> filesFullNameToDelete, List<string> filesFullNameToCompare, bool isReallyDelete)
         {
             filesFullNameToCompare = filesFullNameToCompare.Distinct().ToList();
             filesFullNameToDelete = filesFullNameToDelete.Distinct().ToList().GetUniqueOfThis(filesFullNameToCompare);
@@ -27,19 +27,12 @@ namespace Sugar
                 throw new Exception($"Can't \"DeleteFilesIfEqualsData\", some deleting filenames are not a files");
 
             string keyDeleted = "Deleted";
-            string keyNotEqualsByHash = "NotEqualsByHash";
-            string keyNotEqualsByData = "keyNotEqualsByData";
             string keyMore2GB = "keyMore2GB";
 
             var logs = new ComparaisonLogOutput();
             logs.Groups.Add(keyDeleted, new ComparaisonLogGroup() { Name = "Files deleted" });
             logs.Groups.Add(keyMore2GB, new ComparaisonLogGroup() { Name = "Unable to compare files more than 2 GB" });
-            if (isShowNotEqualsLog)
-            {
-                logs.Groups.Add(keyNotEqualsByHash, new ComparaisonLogGroup() { Name = "Files not equals by hash" });
-                logs.Groups.Add(keyNotEqualsByData, new ComparaisonLogGroup() { Name = "Files not equals by data" });
-            }
-
+            
             var filesToDelete = new List<FileAndInfo>();
             foreach (var fileFullNameToDelete in filesFullNameToDelete)
             {
@@ -63,28 +56,19 @@ namespace Sugar
                     
                     for (int j = 0; j < filesToDelete.Count; j++)
                     {
-                        //if hash not equals
-                        if (filesToDelete[j].DataHashCode != dataHashCodeToCompare)
-                        {
-                            if (isShowNotEqualsLog)
-                                logs.Groups[keyNotEqualsByHash].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
+                        if (filesToDelete[j].DataHashCode != dataHashCodeToCompare) //if hash not equals
                             continue;
-                        }
-                        else
+                        else //if data not equals
                         {
                             var dataToDelete = File.ReadAllBytes(filesToDelete[j].Info.FullName);
-                            //if data not equals
                             if (!dataToDelete.SequenceEqual(dataToCompare))
-                            {
-                                if (isShowNotEqualsLog)
-                                    logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
                                 continue;
-                            }
                         }
 
                         //if data equals
-                        //if short name equals
-                        File.Delete(filesToDelete[j].Info.FullName);
+                        if (isReallyDelete)
+                            File.Delete(filesToDelete[j].Info.FullName);
+
                         logs.Groups[keyDeleted].Elements.Add(new ComparaisonLogElement(filesToDelete[j].Info.FullName, fileFullNameToCompare));
                         filesToDelete.RemoveAt(j);
                         j--;
